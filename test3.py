@@ -13,7 +13,8 @@ nltk.download('stopwords')
 
 OUTPUT_FILE_NAME = 'data.csv'
 
-async def get_tweets_intoDF(username, tweet_limit):
+#works
+def get_tweets_intoDF(username, tweet_limit):
   sia = SIA()
   df = pd.DataFrame(columns=['neg','neu','pos','compound','label','tweet_text','tweet_date','tweet_replyCount','tweet_retweetCount','tweet_source','tweet_mentionedUsers'])
   #myFile = open('db.txt','w')
@@ -37,9 +38,10 @@ async def get_tweets_intoDF(username, tweet_limit):
     else:
       df.loc[insert_loc + 1] = row
 
-  await df.to_csv(OUTPUT_FILE_NAME,encoding='utf-8')
+  df.to_csv(OUTPUT_FILE_NAME,encoding='utf-8')
   #myFile.close()
 
+#works
 def showPercentage():
   df = pd.read_csv('data.csv')
   print(df.label.value_counts(normalize=True)*100)
@@ -56,7 +58,7 @@ def showPercentage():
   plt.show()
  
 
-
+#works
 def best(choice):
   df = pd.read_csv('data.csv')
   if (choice == 'positive'):
@@ -101,11 +103,11 @@ def wordCloud(choice):
     tokens.extend(process_text(line))
   
   freq = nltk.FreqDist(tokens)
-  #print(freq.most_common(20))
-  #myWordCloud = wc(background_color="white").generate_from_frequencies(createDict(lines,30))
-  #plt.imshow(myWordCloud, interpolation="bilinear")
-  #plt.axis("off")
-  #plt.show()
+  print(freq.most_common(20))
+  myWordCloud = wc(background_color="white").generate_from_frequencies(createDict(lines,30))
+  plt.imshow(myWordCloud, interpolation="bilinear")
+  plt.axis("off")
+  plt.show()
 
 
 # temp = sntwitter.TwitterSearchScraper('from:fadsdafsda').get_items()
@@ -124,6 +126,8 @@ def wordCloud(choice):
 # print(testimonial.words.count())
   
 
+#get_tweets_intoDF('elonmusk', 10000)
 #showPercentage()
-#wordCloud('negative')
+#best('negative')
+wordCloud('positive')
 #process_text('@FonsDK We are reaching out to understand more')
