@@ -7,6 +7,8 @@ import nltk
 import matplotlib.pyplot as plt
 import seaborn as sns
 from nltk.tokenize import word_tokenize, RegexpTokenizer
+import sheets.append
+import sheets.search
 
 nltk.download('vader_lexicon')
 nltk.download('stopwords')
