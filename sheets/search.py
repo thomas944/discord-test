@@ -40,7 +40,7 @@ def search_for_user(userName):
   response = request.execute()
   temp = (re.sub("[^0-9]", "", str(str(response).split(',')[2].split(':'))))
   number_of_users = (int(temp.strip('\"')))
-  for i in range(BEGIN_OF_LIST, BEGIN_OF_LIST+number_of_users):
+  for i in range(BEGIN_OF_LIST, BEGIN_OF_LIST + number_of_users):
     RANGE = f'A${i}:E${i}'
     request = service.spreadsheets().values().get(
       spreadsheetId = SPREADSHEET_ID,
@@ -59,6 +59,6 @@ def search_for_user(userName):
     usernames = temp.strip('\"')
     if userName == usernames:
       return i
+  return None
     
 
-search_for_user("ngoc")

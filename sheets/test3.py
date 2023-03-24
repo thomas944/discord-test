@@ -7,8 +7,7 @@ import nltk
 import matplotlib.pyplot as plt
 import seaborn as sns
 from nltk.tokenize import word_tokenize, RegexpTokenizer
-import sheets.append
-import sheets.search
+
 
 nltk.download('vader_lexicon')
 nltk.download('stopwords')
@@ -17,6 +16,7 @@ OUTPUT_FILE_NAME = 'data.csv'
 
 #works
 def get_tweets_intoDF(username, tweet_limit):
+
   sia = SIA()
   df = pd.DataFrame(columns=['neg','neu','pos','compound','label','tweet_text','tweet_date','tweet_replyCount','tweet_retweetCount','tweet_source','tweet_mentionedUsers'])
   #myFile = open('db.txt','w')
@@ -40,12 +40,14 @@ def get_tweets_intoDF(username, tweet_limit):
     else:
       df.loc[insert_loc + 1] = row
 
-  df.to_csv(OUTPUT_FILE_NAME,encoding='utf-8')
+  #df.to_csv(OUTPUT_FILE_NAME,encoding='utf-8')
+  return df
   #myFile.close()
 
 #works
 def showPercentage():
   df = pd.read_csv('data.csv')
+  return df.label.value_counts()
   print(df.label.value_counts(normalize=True)*100)
 
   fig, ax = plt.subplots(figsize=(8,8))
@@ -67,7 +69,7 @@ def best(choice):
     bestParagraph = (df['compound'].idxmax())
   else: 
     bestParagraph = (df['compound'].idxmin())
-  print(df.at[bestParagraph,'compound'], df.at[bestParagraph, 'tweet_text'])
+  return (df.at[bestParagraph,'compound'], df.at[bestParagraph, 'tweet_text'])
 
 
 def process_text(tweet):
@@ -91,6 +93,7 @@ def createDict(lines, n):
   for i in range(0, n):
     myDict.update({most_common[i][0]:most_common[i][1]})
   return myDict
+  
 
 def wordCloud(choice):
   _choice = ''
@@ -105,11 +108,11 @@ def wordCloud(choice):
     tokens.extend(process_text(line))
   
   freq = nltk.FreqDist(tokens)
-  print(freq.most_common(20))
-  myWordCloud = wc(background_color="white").generate_from_frequencies(createDict(lines,30))
-  plt.imshow(myWordCloud, interpolation="bilinear")
-  plt.axis("off")
-  plt.show()
+  return freq.most_common(20)
+  # myWordCloud = wc(background_color="white").generate_from_frequencies(createDict(lines,30))
+  # plt.imshow(myWordCloud, interpolation="bilinear")
+  # plt.axis("off")
+  # plt.show()
 
 
 # temp = sntwitter.TwitterSearchScraper('from:fadsdafsda').get_items()
@@ -129,7 +132,7 @@ def wordCloud(choice):
   
 
 #get_tweets_intoDF('elonmusk', 10000)
-#showPercentage()
+#print(showPercentage())
 #best('negative')
-wordCloud('positive')
+wordCloud('negative')
 #process_text('@FonsDK We are reaching out to understand more')

@@ -2,7 +2,11 @@ from discord.ext import commands
 from selenium import webdriver
 import snscrape.modules.twitter as sntwitter
 import discord
-import test3
+from sheets.test3 import get_tweets_intoDF, showPercentage, best
+from sheets.search import search_for_user
+#import sheets.search
+#import sheets.append
+
 
 
 
@@ -38,8 +42,21 @@ class AppCommands(commands.Cog):
 
   @commands.command()
   async def test(self, ctx, arg1, arg2):
-    test3.get_tweets_intoDF(arg1, arg2)
-    await ctx.send('hi')
+    await ctx.send(arg1)
+
+  @commands.command()
+  async def read(self, ctx, arg1, arg2): #arg1 = userName, #arg2 = tweet count
+    # if sheets.search.search_for_user(arg1) == None:
+    #   get_tweets_intoDF(arg1, arg2)
+
+
+    # await ctx.send('added content')
+    file = open('/Users/pham/Desktop/Coding/Project/discord-bot/input.txt', "r")
+    content = file.read()
+    file.close()
+    await ctx.send(content)
+
+
   # async def notembed(self, ctx, arg1):
   #   embed_message = discord.Embed(title="title",description="description")
   #   embed_message.set_author(name="thomas")
